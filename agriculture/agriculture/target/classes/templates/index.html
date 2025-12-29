@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Crop Management</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: url('/images/farmer-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+        }
+
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 50px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px #000;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.9);
+            color: #000;
+            margin-bottom: 40px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        form {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            margin: auto;
+            box-shadow: 0 0 10px #333;
+            color: #000;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        form input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #388e3c;
+        }
+    </style>
+</head>
+<body>
+<div class="overlay">
+    <h1>All Crops</h1>
+
+    <table>
+        <tr>
+            <th>Serial No</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Season</th>
+            <th>Price (per kg)</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="crop : ${crops}">
+            <td th:text="${crop.serialNumber}"></td>
+            <td th:text="${crop.name}"></td>
+            <td th:text="${crop.type}"></td>
+            <td th:text="${crop.season}"></td>
+            <td th:text="${crop.pricePerKg}"></td>
+            <td>
+                <a th:href="@{'/edit/' + ${crop.serialNumber}}" class="btn">Edit</a>
+                <a th:href="@{'/delete/' + ${crop.serialNumber}}" class="btn" style="background-color:#f44336;">Delete</a>
+            </td>
+        </tr>
+    </table>
+
+    <h1>Add New Crop</h1>
+
+    <form th:action="@{/add}" method="post" th:object="${crop}">
+        <label>Serial No:</label>
+        <input type="text" th:field="*{serialNumber}" required>
+
+        <label>Name:</label>
+        <input type="text" th:field="*{name}" required>
+
+        <label>Type:</label>
+        <input type="text" th:field="*{type}">
+
+        <label>Season:</label>
+        <input type="text" th:field="*{season}">
+
+        <label>Price (per kg):</label>
+        <input type="number" step="0.01" th:field="*{pricePerKg}" required>
+
+        <button type="submit" class="btn">Add Crop</button>
+    </form>
+</div>
+</body>
+</html>

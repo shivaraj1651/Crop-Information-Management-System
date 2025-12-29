@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Crop</title>
+</head>
+<body>
+    <h1>Edit Crop</h1>
+    <form action="/update" method="post" th:object="${crop}">
+        Serial No: <input type="text" name="serialNumber" th:field="*{serialNumber}" readonly><br>
+        Name: <input type="text" name="name" th:field="*{name}"><br>
+        Type: <input type="text" name="type" th:field="*{type}"><br>
+        Season: <input type="text" name="season" th:field="*{season}"><br>
+        Price: <input type="number" step="0.01" name="pricePerKg" th:field="*{pricePerKg}"><br>
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>
